@@ -9,26 +9,43 @@ can find. Extension ID `haskell-modules`. Published by `friedbrice`.
   different packages, such as your unit tests and project dependencies.
   Navigate between modules, even in different packages, with ease.
 
+  ![Cross-package/component navigation](doc/1-basic-usage.gif)
+
 * __Supports multiple `Main` modules__ `Main` modules appear in the module tree
   labelled by their filepath, rather than their module identifier.
 
 * __Rename module__ Copies the contents of the current file to a new path and
   updates import lines in all your modules and your cabal file. Leaves the
   current file in place so GHCi won't get confused. Renaming Haskell modules on
-  the fly has never been easier.
+  the fly has never been easier. _N.B. Does not yet replace imports._
+
+  ![Duplicate modules](doc/3-duplicate-module.gif)
 
 * __Create submodule__ Pretty self-evident.
+
+  ![Create submodules](doc/2-create-submodule.gif)
 
 * __Jump to module__ Jump to the module under cursor. Even if it's in a
   project dependency.
 
+  ![Jump to modules](doc/5-jump-to-module.gif)
+
 * __Hydrate/Dehydrate module__ Inserts qualified imports of all imported
   modules (hydrate). This greatly improves GHC feedback and suggestions.
   When done working on a module, qualified symbols introduced in this way can
-  then be replaced with explicit imports (dehydrate). _N.B. dehydrate is not
+  then be replaced with explicit imports (dehydrate). _N.B. Dehydrate is not
   implemented yet implemented._
 
+  !["Hydrate" a module (add qualified imports to power GHC suggestions)](docs/6-hydrate-module.gif)
+
 ## Limitations
+
+### Incomplete Features
+
+1.  Dehydrate is not yet implemented.
+
+2.  Duplicating a module does not yet replac import statements in project
+    modules.
 
 ### Project Dependencies
 
