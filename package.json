@@ -1,0 +1,152 @@
+{
+  "activationEvents": [
+    "onLanguage:haskell"
+  ],
+  "categories": [
+    "Other"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "haskell-modules.refresh",
+        "icon": "$(sync)",
+        "title": "Haskell Modules: Refresh"
+      },
+      {
+        "command": "haskell-modules.add",
+        "icon": "$(add)",
+        "title": "Haskell Modules: Add submodule..."
+      },
+      {
+        "command": "haskell-modules.create",
+        "icon": "$(add)",
+        "title": "Haskell Modules: Create module file..."
+      },
+      {
+        "command": "haskell-modules.rename",
+        "icon": "$(copy)",
+        "title": "Haskell Modules: Duplicate as..."
+      },
+      {
+        "command": "haskell-modules.jump",
+        "icon": "$(go-to-file)",
+        "title": "Haskell Modules: Jump to module"
+      },
+      {
+        "command": "haskell-modules.hydrate",
+        "title": "Haskell Modules: Hydrate module"
+      }
+    ],
+    "configuration": {
+      "title": "Haskell Modules",
+      "type": "object",
+      "properties": {
+        "haskell-modules.revealFocused": {
+          "type": "boolean",
+          "default": true,
+          "description": "Focus module in tree view when viewing it in the editor."
+        },
+        "haskell-modules.hydratePrefix": {
+          "type": "string",
+          "default": "HM_",
+          "description": "Prefix for qualified imports when hydrating a modules."
+        },
+        "haskell-modules.excludesRegEx": {
+          "type": "string",
+          "default": "(.stack-work\\/|dist\\/|dist-newstyle\\/)",
+          "description": "Regex for directories to exclude from the module tree view."
+        }
+      }
+    },
+    "menus": {
+      "commandPalette": [],
+      "editor/context": [
+        {
+          "command": "haskell-modules.jump",
+          "when": "editorLangId == haskell"
+        },
+        {
+          "command": "haskell-modules.hydrate",
+          "when": "editorLangId == haskell"
+        }
+      ],
+      "editor/title/context": [
+        {
+          "command": "haskell-modules.hydrate",
+          "when": "editorLangId == haskell"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "haskell-modules.add",
+          "when": "view == haskell-modules && (viewItem == physical || viewItem == virtual)"
+        },
+        {
+          "command": "haskell-modules.create",
+          "when": "view == haskell-modules && viewItem == virtual"
+        },
+        {
+          "command": "haskell-modules.rename",
+          "when": "view == haskell-modules && (viewItem == physical)"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "haskell-modules.refresh",
+          "group": "navigation",
+          "when": "view == haskell-modules"
+        }
+      ]
+    },
+    "views": {
+      "explorer": [
+        {
+          "icon": "img/haskell-icon.svg",
+          "id": "haskell-modules",
+          "name": "Haskell Modules"
+        }
+      ]
+    }
+  },
+  "description": "Tree view of Haskell modules",
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.95.0",
+    "@typescript-eslint/eslint-plugin": "^8.17.0",
+    "@typescript-eslint/parser": "^8.17.0",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1",
+    "eslint": "^9.16.0",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.7.2",
+    "vsce": "^2.15.0",
+    "webpack": "^5.95.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "displayName": "haskell-modules",
+  "engines": {
+    "vscode": "^1.95.0"
+  },
+  "icon": "img/haskell-modules.png",
+  "main": "./dist/extension.js",
+  "name": "haskell-modules",
+  "publisher": "friedbrice",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/friedbrice/haskell-modules.git"
+  },
+  "scripts": {
+    "compile": "webpack",
+    "compile-tests": "tsc -p . --outDir out",
+    "lint": "eslint src",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "test": "vscode-test",
+    "vscode:prepublish": "npm run package",
+    "vscode:package": "rm -rf *.vsix && npm run vscode:prepublish && npx vsce package",
+    "watch": "webpack --watch",
+    "watch-tests": "tsc -p . -w --outDir out"
+  },
+  "version": "1.0.0"
+}
